@@ -14,7 +14,12 @@ module Vagrant
         if File.exist?("/etc/redhat-release")
           # Check if we have a known redhat release
           File.open("/etc/redhat-release") do |f|
-            return Fedora if f.gets =~ /^Fedora/
+            content = f.gets
+            if content =~ /^Fedora release 16/
+              return Fedora16
+            elsif content =~ /^Fedora/
+              return Fedora
+            end
           end
         end
 
